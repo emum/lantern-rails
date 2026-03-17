@@ -5,7 +5,8 @@ Gem::Specification.new do |spec|
   spec.version     = Lantern::Rails::VERSION
   spec.authors     = ["Eric Mumbower"]
   spec.summary     = "Postgres monitoring collector for Rails apps — sends health metrics to Lantern."
-  spec.homepage    = "https://uselantern.dev"
+  spec.homepage              = "https://uselantern.dev"
+  spec.metadata["source_code_uri"] = "https://github.com/emum/lantern-rails"
   spec.license     = "MIT"
 
   spec.required_ruby_version = ">= 3.1"
