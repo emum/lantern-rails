@@ -2,6 +2,9 @@ require "lantern/rails/version"
 require "lantern/rails/configuration"
 require "lantern/rails/git_metadata"
 require "lantern/rails/collector"
+require "lantern/rails/query_fingerprinter"
+require "lantern/rails/query_aggregator"
+require "lantern/rails/request_tracker"
 require "lantern/rails/reporter"
 require "lantern/rails/runner"
 require "lantern/rails/railtie" if defined?(::Rails)
@@ -15,6 +18,10 @@ module Lantern
 
       def configure
         yield configuration
+      end
+
+      def query_aggregator
+        @query_aggregator ||= QueryAggregator.new
       end
 
       # Manually report a deploy event. Call this from your CI/CD pipeline

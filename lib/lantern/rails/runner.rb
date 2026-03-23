@@ -35,6 +35,10 @@ module Lantern
         payload = Collector.new.collect
         return unless payload
 
+        # Drain accumulated N+1 query data from the request tracker
+        query_patterns = Lantern::Rails.query_aggregator.drain
+        payload[:query_patterns] = query_patterns if query_patterns.any?
+
         Reporter.new(@config).report_snapshot(payload)
       rescue => e
         ::Rails.logger.error("[Lantern] Runner error: #{e.message}")
