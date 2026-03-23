@@ -10,6 +10,9 @@ module Lantern
       end
 
       def call(env)
+        # No-op if Lantern isn't configured or not enabled for this environment
+        return @app.call(env) unless enabled?
+
         # Only track actual controller requests, skip assets/healthchecks
         return @app.call(env) unless trackable_request?(env)
 
@@ -48,6 +51,14 @@ module Lantern
       end
 
       private
+
+      def enabled?
+        return @enabled if defined?(@enabled)
+
+        config = Lantern::Rails.configuration
+        @enabled = config.valid? && config.enabled &&
+                   config.collect_in_environments.include?(::Rails.env.to_s)
+      end
 
       def trackable_request?(env)
         # Skip asset pipeline, action cable, health checks
