@@ -16,50 +16,24 @@ Then run:
 bundle install
 ```
 
-## Setup
+## Quick start
 
-1. Generate an API key at [uselantern.dev](https://uselantern.dev)
-2. Store the key using one of the options below
-3. Create an initializer
+1. Sign up for a free API key at [uselantern.dev](https://uselantern.dev)
+2. Run the installer:
 
-### Store your API key
+```
+rails generate lantern:install
+```
 
-**Option A: Environment variable**
+3. Add your API key to the generated initializer (`config/initializers/lantern.rb`) via environment variable or Rails credentials:
 
 ```
 LANTERN_API_KEY=lnt_your_key_here
 ```
 
-**Option B: Rails credentials**
+4. Deploy — Lantern starts collecting automatically.
 
-```
-bin/rails credentials:edit
-```
-
-Flat:
-```yaml
-lantern_api_key: lnt_your_key_here
-```
-
-Or nested:
-```yaml
-lantern:
-  api_key: lnt_your_key_here
-```
-
-### Create the initializer
-
-```ruby
-# config/initializers/lantern.rb
-Lantern::Rails.configure do |config|
-  # Match how you stored the key above:
-  config.api_key = ENV["LANTERN_API_KEY"]
-  # Or: config.api_key = Rails.application.credentials.lantern_api_key
-  # Or: config.api_key = Rails.application.credentials.dig(:lantern, :api_key)
-end
-```
-
-That's it. The collector starts automatically when your Rails app boots in production.
+That's it. Open [uselantern.dev](https://uselantern.dev) to see your dashboard.
 
 ## Configuration
 

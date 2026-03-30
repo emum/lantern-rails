@@ -11,9 +11,24 @@ module Lantern
 
       config.after_initialize do
         config = Lantern::Rails.configuration
-        next unless config.valid?
-        next unless config.enabled
-        next unless config.collect_in_environments.include?(::Rails.env.to_s)
+
+        unless config.valid?
+          ::Rails.logger.info(
+            "[Lantern] No API key configured. Get your free key at https://uselantern.dev " \
+            "then run: rails generate lantern:install"
+          )
+          next
+        end
+
+        unless config.enabled
+          ::Rails.logger.info("[Lantern] Disabled via configuration.")
+          next
+        end
+
+        unless config.collect_in_environments.include?(::Rails.env.to_s)
+          ::Rails.logger.info("[Lantern] Skipping collection in #{::Rails.env} environment.")
+          next
+        end
 
         runner = Lantern::Rails::Runner.new(config)
 

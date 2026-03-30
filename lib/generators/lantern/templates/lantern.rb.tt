@@ -1,0 +1,11 @@
+Lantern::Rails.configure do |config|
+  # Your API key from https://uselantern.dev
+  # Sign up for free, add a database, and copy the key here.
+  config.api_key = Rails.application.credentials.dig(:lantern, :api_key) || ENV["LANTERN_API_KEY"]
+
+  # Collection interval in seconds (default: 300 = 5 minutes)
+  # config.interval = 300
+
+  # Environments to collect in (default: production and staging)
+  # config.collect_in_environments = %w[production staging]
+end
